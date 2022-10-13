@@ -1,0 +1,53 @@
+---
+title: "Nobel winners"
+author: "Mine Çetinkaya-Rundel"
+output: github_document
+---
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+```
+
+Let's first load the data:
+
+```{r label-me1, eval=FALSE}
+nobel <- read_csv("data-raw/nobel.csv")
+
+nobel %>% 
+  count(category)
+
+```
+
+Then let's split the data into two:
+
+```{r label-me2, eval=FALSE}
+# stem laureates
+
+stem_topics <- c("Chemistry", "Economics", "Medicine", "Physics")
+
+nobel_stem <- nobel %>%
+  filter(category %in% stem_topics)
+
+# APPROACH1: non-steam laureates
+non_nobel_stem <- nobel %>%
+  filter(!(category %in% stem_topics))
+
+
+# APPROACH2: non-steam laureates
+non_stem_topics <- c("Peace", "Literature")
+
+non_nobel_stem <- nobel %>%
+  filter(category %in% non_stem_topics)
+
+```
+
+And finally write out the data:
+
+```{r label-me3}
+# add code for writing out the two data frames here
+
+write_csv(nobel_stem, "data/nobel_stem.csv")
+write_csv(non_nobel_stem, "data/non_nobel_stem.csv")
+
+
+```
